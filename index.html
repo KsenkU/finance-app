@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовый планировщик</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="themeToggleBtn" class="theme-toggle" type="button" title="Переключить тему">
+        🌙
+    </button>
+
+    <div class="app">
+        <header class="header">
+            <div class="header-content">
+                <div>
+                    <h1>Финансовый планировщик</h1>
+                    <p class="subtitle">Планы, покупки, задачи и напоминания</p>
+                </div>
+            </div>
+        </header>
+
+        <button id="menuToggleBtn" class="menu-toggle" type="button" title="Меню">
+    ☰
+</button>
+
+<div id="sideOverlay" class="side-overlay"></div>
+
+<aside id="sideMenu" class="side-menu">
+    <div class="side-menu-header">
+        <strong>Разделы</strong>
+        <button id="menuCloseBtn" class="menu-close" type="button" title="Закрыть">
+            ×
+        </button>
+    </div>
+
+    <button class="side-nav-btn active" type="button" data-tab-btn="plans">
+        Планы
+    </button>
+
+    <button class="side-nav-btn" type="button" data-tab-btn="budget">
+        Бюджет
+    </button>
+
+    <button class="side-nav-btn" type="button" data-tab-btn="reminders">
+        Напоминания
+    </button>
+
+    <button class="side-nav-btn" type="button" data-tab-btn="backup">
+        Копия
+    </button>
+</aside>
+
+        <section class="panel" data-tab-page="plans">
+            <h2>Добавить план</h2>
+
+            <div class="form">
+                <input type="text" id="titleInput" placeholder="Что нужно сделать или купить?">
+
+                <input type="number" id="amountInput" placeholder="Сумма ₽, необязательно">
+
+                <div class="field">
+                    <label>Тип</label>
+                    <select id="typeInput">
+                        <option value="Покупка">Покупка</option>
+                        <option value="Задача">Задача</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Категория</label>
+                    <select id="categoryInput"></select>
+                </div>
+
+                <div class="new-category">
+                    <input type="text" id="newCategoryInput" placeholder="Новая категория">
+                    <button id="addCategoryBtn" type="button">+</button>
+                </div>
+
+                <div class="field">
+                    <label>Приоритет</label>
+                    <select id="priorityInput">
+                        <option value="Низкий">Низкий</option>
+                        <option value="Средний">Средний</option>
+                        <option value="Высокий">Высокий</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Дата напоминания</label>
+                    <input type="date" id="reminderInput">
+                </div>
+
+                <button id="addPlanBtn" class="main-btn" type="button">
+                    Добавить план
+                </button>
+
+                <button id="cancelEditBtn" class="cancel-btn hidden" type="button">
+                    Отмена редактирования
+                </button>
+            </div>
+        </section>
+
+        <section class="summary" data-tab-page="plans">
+            <div>
+                <span class="summary-label">Всего запланировано</span>
+                <strong><span id="totalAmount">0 ₽</span></strong>
+            </div>
+
+            <div>
+                <span class="summary-label">Активных планов</span>
+                <strong><span id="activeCount">0</span></strong>
+            </div>
+        </section>
+
+        <section class="panel" data-tab-page="plans">
+            <h2>Фильтры</h2>
+
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Поиск по названию или категории">
+
+                <select id="categoryFilter"></select>
+
+                <select id="typeFilter">
+                    <option value="Все">Все типы</option>
+                    <option value="Покупка">Покупки</option>
+                    <option value="Задача">Задачи</option>
+                </select>
+
+                <select id="priorityFilter">
+                    <option value="Все">Все приоритеты</option>
+                    <option value="Низкий">Низкий</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Высокий">Высокий</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="Все">Все статусы</option>
+                    <option value="Активные">Активные</option>
+                    <option value="Выполненные">Выполненные</option>
+                </select>
+            </div>
+        </section>
+
+        <section data-tab-page="plans">
+            <h2>Все планы</h2>
+            <div id="plansList" class="plans-list"></div>
+        </section>
+
+        <section class="panel budget-panel" data-tab-page="budget">
+            <h2>Бюджет</h2>
+            <div class="currency-settings">
+    <label>Валюта отображения</label>
+
+    <select id="currencyInput">
+        <option value="RUB">Рубли ₽</option>
+        <option value="USD">Доллары $</option>
+        <option value="EUR">Евро €</option>
+        <option value="GBP">Фунты £</option>
+    </select>
+
+    <p id="exchangeRateInfo" class="exchange-rate-info">
+        Курсы загружаются...
+    </p>
+</div>
+
+            <div class="budget-form">
+                <input type="number" id="budgetInput" placeholder="Введите общий бюджет ₽">
+                <button id="saveBudgetBtn" type="button">Сохранить бюджет</button>
+            </div>
+
+            <div class="budget-info">
+                <p>Бюджет: <strong><span id="budgetAmount">не указан</span></strong></p>
+                <p>Остаток: <strong><span id="remainingAmount">не указан</span></strong></p>
+            </div>
+        </section>
+
+        <section class="panel reminders-panel" data-tab-page="reminders">
+            <h2>Напоминания</h2>
+
+            <button id="notificationBtn" type="button">
+                Разрешить уведомления
+            </button>
+
+            <div id="remindersList"></div>
+        </section>
+
+        <section class="panel backup-panel" data-tab-page="backup">
+            <h2>Резервная копия</h2>
+
+            <div class="backup-actions">
+                <button id="exportBtn" class="header-btn" type="button">
+                    Скачать
+                </button>
+
+                <button id="importBtn" class="header-btn" type="button">
+                    Загрузить
+                </button>
+
+                <input type="file" id="importFileInput" class="hidden" accept=".json,application/json">
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
